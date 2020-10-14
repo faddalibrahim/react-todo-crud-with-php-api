@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 import AddTodo from './AddTodo';
 import UpdateTodo from './UpdateTodo';
 import Todos from './Todos';
 
 class Home extends Component {
   state = {
-    todos : [],
+    todos : "",
     idToUpdate: null,
-    showUpdateForm: false,
+    showUpdateForm: false, 
     showAddForm: true
   }
 
   deleteTodo = (id) => {
-    const todos = this.state.todos.filter(todo => todo.id !== id);
-    this.setState({todos})
+    axios.get(`http://localhost/rest/api/post/delete.php?id=${id}`)
+    .then(json => {
+        if(json.data.success){
+          const todos = this.state.todos.filter(todo => todo.id !== id);
+          this.setState({todos})
+          alert(json.data.success)
+        }
+    })
   }
 
   addTodo = (todo) => {
@@ -50,16 +57,18 @@ class Home extends Component {
       this.setState({
         showUpdateForm: false,
         idToUpdate: null,
-        showUpdateForm: true
+        showUpdateForm: true 
       })
 
     }
   }
 
   componentDidMount(){
-    fetch('http://localhost/rest/api/post/read.php')
-    .then(response => response.json())
-    .then(json => this.setState({todos: json.data}))
+    axios.get('http://localhost/rest/api/post/read.php')
+    .then(response => {
+        console.log(response)
+        this.setState({todos: response.data.data})
+    })
   }
 
   render() {

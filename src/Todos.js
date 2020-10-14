@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Todos = ({todos, deleteTodo, toggleUpdateForm, highlight}) => {
+const Todos = ({todos, deleteTodo, toggleUpdateForm}) => {
+    // if(todos.empty) console.log(todos.empty)
+    // console.log(todos)
     const todoList = todos.length ? (
         todos.map(({id, content}) => {
             return (
@@ -12,7 +14,7 @@ const Todos = ({todos, deleteTodo, toggleUpdateForm, highlight}) => {
                         <span className="teal-text" onClick={() => toggleUpdateForm(id)}>update</span>
                     </div>
                 </div>
-            )
+            ) 
         })
     ) : (
         <p className="center">No posts yet..</p>
@@ -23,5 +25,4 @@ const Todos = ({todos, deleteTodo, toggleUpdateForm, highlight}) => {
         </div>
     )
 }
-
-export default Todos;
+export default Todos; 

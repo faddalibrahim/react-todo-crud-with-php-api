@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 
 class Todo extends Component {
   state = {
     todo : {},
-    // todo_id : 
   }
 
   componentDidMount(){
-     fetch(`http://localhost/rest/api/post/read_single.php?id=${this.props.match.params.todo_id}`)
-    .then(response => response.json())
-    .then(json => this.setState({todo: json}))
-    // .then(json => console.log(json))
+    axios.get(`http://localhost/rest/api/post/read_single.php?id=${this.props.match.params.todo_id}`)
+    .then(json => this.setState({todo: json.data}))
   }
 
 
   render() {
-    console.log(this.props)
-    console.log(typeof +this.props.match.params.todo_id)
-
     return (
      <div>
-        <h1></h1>
-        <p>{this.state.todo.body}</p>
-     </div>
-
+        <div className="card">
+          <div className="card-content">
+            <p>{this.state.todo.body ?? "No such item exists"}</p>
+          </div>
+        </div>
+      </div>
     )
   }
 }
