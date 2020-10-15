@@ -9,7 +9,6 @@ class App extends Component {
       <Router>
           <Route exact path="/" component={Home}/>
           <Route path="/:todo_id" component={Todo}/>
-          <Route path="*" component={Error}/>
       </Router>
     )
   }

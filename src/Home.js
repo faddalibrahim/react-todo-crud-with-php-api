@@ -6,7 +6,7 @@ import Todos from './Todos';
 
 class Home extends Component {
   state = {
-    todos : "",
+    todos : {},
     idToUpdate: null,
     showUpdateForm: false, 
     showAddForm: true
@@ -59,15 +59,15 @@ class Home extends Component {
         idToUpdate: null,
         showUpdateForm: true 
       })
-
     }
   }
 
   componentDidMount(){
     axios.get('http://localhost/rest/api/post/read.php')
     .then(response => {
-        console.log(response)
+      if(response.data.data){
         this.setState({todos: response.data.data})
+      }
     })
   }
 
