@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Todos = ({todos, deleteTodo, toggleUpdateForm}) => {
     // if(todos.empty) console.log(todos.empty)
-    // console.log(todos)
+    console.log(todos.length)
     const todoList = todos.length ? (
         todos.map(({id, content}) => {
             return (

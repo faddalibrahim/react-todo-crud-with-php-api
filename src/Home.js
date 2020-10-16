@@ -6,7 +6,7 @@ import Todos from './Todos';
 
 class Home extends Component {
   state = {
-    todos : {},
+    todos : [{id: 1}],
     idToUpdate: null,
     showUpdateForm: false, 
     showAddForm: true
@@ -67,8 +67,11 @@ class Home extends Component {
     .then(response => {
       if(response.data.data){
         this.setState({todos: response.data.data})
+      }else{
+        this.setState({todos: {}})
       }
     })
+    .catch(err => console.log(err))
   }
 
   render() {
