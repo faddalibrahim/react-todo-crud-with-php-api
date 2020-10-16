@@ -6,7 +6,7 @@ import Todos from './Todos';
 
 class Home extends Component {
   state = {
-    todos : [{id: 1}],
+    todos : [],
     idToUpdate: null,
     showUpdateForm: false, 
     showAddForm: true
@@ -20,7 +20,7 @@ class Home extends Component {
           this.setState({todos})
           alert(json.data.success)
         }
-    })
+    }).catch(error => alert("Error connecting to database. Try again later"))
   }
 
   addTodo = (todo) => {
@@ -70,8 +70,8 @@ class Home extends Component {
       }else{
         this.setState({todos: {}})
       }
+      console.log(response)
     })
-    .catch(err => console.log(err))
   }
 
   render() {
