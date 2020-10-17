@@ -8,19 +8,29 @@ class Home extends Component {
   state = {
     todos : [],
     idToUpdate: null, 
-    showUpdateForm: false,
+    showUpdateForm: false, 
     showAddForm: true  
   }
 
-  deleteTodo = (id) => {
-    axios.get(`http://localhost/rest/api/post/delete.php?id=${id}`) 
-    .then(json => {
-        if(json.data.success){
-          const todos = this.state.todos.filter(todo => todo.id !== id);
-          this.setState({todos})
-          alert(json.data.success)
-        }
-    }).catch(error => alert("Error connecting to database. Try again later"))
+  deleteTodo = (id) => {  
+    // axios.get(`http://localhost/rest/api/post/delete.php?id=${id}`)       
+    // .then(json => {
+    //     if(json.data.success){
+    //       const todos = this.state.todos.filter(todo => todo.id !== id);  
+    //       this.setState({todos})
+    //       alert(json.data.success) 
+    //     }
+    // }).catch(error => alert("Error connecting to database. Try again later")) 
+    const url = 'http://localhost/rest/api/post/deletee.php'; 
+    const data = {id};
+    const options = {
+      headers: {'Content-Type': 'application/json'} 
+    };
+    axios.delete(url, data, options) 
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => alert("Error connecting to database. Try again later")) 
   }
 
   addTodo = (todo) => {
@@ -28,33 +38,42 @@ class Home extends Component {
     const options = {
       headers: {'Content-Type': 'application/json'} 
     };
-    axios.post(url, JSON.stringify(todo))
+    axios.post(url, JSON.stringify(todo)) 
     .then(response => {
-      todo.id = Math.random();
+      todo.id = Math.random(); 
       let todos = [...this.state.todos, todo];
       this.setState({todos})
       alert(response.data.message)
     })
-    .catch(err => alert(err + ", Please try again later"))
+    .catch(err => alert(err + ", Please try again later")) 
   }
+
+  //random id generated from create to will not match id to update
+  //also check if response was postive before updating dom
 
   updateTodo = (newContent) => {
     const idToUpdate = this.state.idToUpdate;
 
-    const todos = this.state.todos;
-
-
-    todos.find(todo => todo.id === idToUpdate).content = newContent;
-
-    this.setState({
-      todos,
-      idToUpdate: null,
-      showUpdateForm: false,
-      showAddForm: true
+    const url = 'http://localhost/rest/api/post/update.php';
+     axios.put(url, JSON.stringify({idToUpdate, newContent}))
+    .then(response => {
+      const todos = this.state.todos;
+      todos.find(todo => todo.id === idToUpdate).content = newContent;
+      this.setState({
+        todos,
+        idToUpdate: null,
+        showUpdateForm: false,
+        showAddForm: true
+      })
+      alert(response.data.message);
     })
+    .catch(err => alert(err + ", Please try again later"))
+
+
+   
   }
 
-  toggleUpdateForm = (clickedItemId) => {
+  toggleUpdateForm = (clickedItemId) => {    
     if(!this.state.showUpdateForm){
       this.setState({
         showUpdateForm: true,
@@ -74,6 +93,7 @@ class Home extends Component {
   componentDidMount(){
     axios.get('http://localhost/rest/api/post/read.php')
     .then(response => {
+      console.log(response)
       if(response.data.data){
         this.setState({todos: response.data.data})
       }
