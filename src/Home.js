@@ -24,8 +24,11 @@ class Home extends Component {
   }
 
   addTodo = (todo) => {
-    let url = 'http://localhost/rest/api/post/create.php';
-    axios.post(url, todo)
+    const url = 'http://localhost/rest/api/post/create.php';
+    const options = {
+      headers: {'Content-Type': 'application/json'}
+    };
+    axios.post(url, JSON.stringify(todo), options)
     .then(response => console.log(response))
     // todo.id = Math.random();
     // let todos = [...this.state.todos, todo];
