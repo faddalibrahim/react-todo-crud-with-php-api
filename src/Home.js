@@ -67,10 +67,7 @@ class Home extends Component {
     .then(response => {
       if(response.data.data){
         this.setState({todos: response.data.data})
-      }else{
-        this.setState({todos: {}})
       }
-      console.log(response)
     })
   }
 
