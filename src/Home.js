@@ -24,9 +24,12 @@ class Home extends Component {
   }
 
   addTodo = (todo) => {
-    todo.id = Math.random();
-    let todos = [...this.state.todos, todo];
-    this.setState({todos})
+    let url = 'http://localhost/rest/api/post/create.php';
+    axios.post(url, todo)
+    .then(response => console.log(response))
+    // todo.id = Math.random();
+    // let todos = [...this.state.todos, todo];
+    // this.setState({todos})
   }
 
   updateTodo = (newContent) => {
