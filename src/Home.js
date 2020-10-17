@@ -7,13 +7,13 @@ import Todos from './Todos';
 class Home extends Component {
   state = {
     todos : [],
-    idToUpdate: null,
-    showUpdateForm: false, 
-    showAddForm: true
+    idToUpdate: null, 
+    showUpdateForm: false,
+    showAddForm: true  
   }
 
   deleteTodo = (id) => {
-    axios.get(`http://localhost/rest/api/post/delete.php?id=${id}`)
+    axios.get(`http://localhost/rest/api/post/delete.php?id=${id}`) 
     .then(json => {
         if(json.data.success){
           const todos = this.state.todos.filter(todo => todo.id !== id);
@@ -26,13 +26,16 @@ class Home extends Component {
   addTodo = (todo) => {
     const url = 'http://localhost/rest/api/post/create.php';
     const options = {
-      headers: {'Content-Type': 'application/json'}
+      headers: {'Content-Type': 'application/json'} 
     };
-    axios.post(url, JSON.stringify(todo), options)
-    .then(response => console.log(response))
-    // todo.id = Math.random();
-    // let todos = [...this.state.todos, todo];
-    // this.setState({todos})
+    axios.post(url, JSON.stringify(todo))
+    .then(response => {
+      todo.id = Math.random();
+      let todos = [...this.state.todos, todo];
+      this.setState({todos})
+      alert(response.data.message)
+    })
+    .catch(err => alert(err + ", Please try again later"))
   }
 
   updateTodo = (newContent) => {
