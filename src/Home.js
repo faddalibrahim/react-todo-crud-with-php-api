@@ -51,6 +51,7 @@ class Home extends Component {
 
   //random id generated from create to will not match id to update
   //also check if response was postive before updating dom
+  //put the code that hides the update form into a function call
 
   updateTodo = (newContent) => {
     const idToUpdate = this.state.idToUpdate;
