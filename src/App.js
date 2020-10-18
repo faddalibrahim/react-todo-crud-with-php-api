@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Router>
           <Route exact path="/" component={Home}/>
-          <Route path="/:todo_id" component={Todo}/>
+          <Route path="/:todo_id" component={Todo}/> 
       </Router>
     )
   }
