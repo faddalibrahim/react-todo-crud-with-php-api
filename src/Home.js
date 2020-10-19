@@ -46,7 +46,9 @@ class Home extends Component {
       this.setState({todos})
       alert(response.data.message)
     })
-    .catch(err => alert(err + ", Please try again later")) 
+    .catch(err => { 
+      alert(err + ", Please try again later")
+    }) 
   }
 
   //random id generated from create to will not match id to update
