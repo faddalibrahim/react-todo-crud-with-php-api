@@ -23,10 +23,7 @@ class Home extends Component {
     // }).catch(error => alert("Error connecting to database. Try again later")) 
     const url = 'http://localhost/rest/api/post/deletee.php'; 
     const data = {id};
-    // const options = {
-    //   headers: {'Content-Type': 'application/json'} 
-    // };
-    // axios.delete(url, data, options) 
+ 
     axios.delete(url, data) 
     .then(response => {
       console.log(response)
